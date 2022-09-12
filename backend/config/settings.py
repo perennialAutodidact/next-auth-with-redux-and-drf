@@ -174,10 +174,6 @@ ACCESS_TOKEN_EXPIRY = {
     'minutes': 0,
     'seconds': 10
 }
-
-REFRESH_TOKEN_SECRET = decouple.config('DJANGO_REFRESH_TOKEN_SECRET')
-ACCESS_TOKEN_SECRET = decouple.config('DJANGO_ACCESS_TOKEN_SECRET')
-
 # to accept cookies via axios
 CORS_ALLOW_CREDENTIALS = True
 
