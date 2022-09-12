@@ -1,15 +1,20 @@
 import { NextPage } from "next";
 import formStyles from "../styles/authform.module.css";
 import styles from "../styles/Home.module.css";
-import Layout from '../common/components/Layout'
+import Layout from "../common/components/Layout";
 import React, {
   useState,
   FormEvent,
   FormEventHandler,
   ChangeEvent,
 } from "react";
+import { useAppDispatch } from "../store/hooks";
+import { login } from "../store/authSlice/actions";
+import { AuthFormData } from "../ts/interfaces/auth";
 
 const LoginPage = () => {
+  const dispatch = useAppDispatch();
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -17,6 +22,7 @@ const LoginPage = () => {
 
   const handleSubmit: FormEventHandler = (e) => {
     e.preventDefault();
+    dispatch(login(formData));
     console.log("Login Clicked");
   };
 
@@ -56,7 +62,11 @@ const LoginPage = () => {
             />
           </label>
           <div className={formStyles.formInput}>
-            <input type="submit" value="Log In" className={formStyles.submitButton}/>
+            <input
+              type="submit"
+              value="Log In"
+              className={formStyles.submitButton}
+            />
           </div>
         </form>
       </div>
