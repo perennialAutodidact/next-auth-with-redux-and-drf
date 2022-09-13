@@ -11,7 +11,7 @@ axios.defaults.withCredentials = true;
 export const register = createAsyncThunk(
   "auth/register",
   async (formData: AuthFormData, { rejectWithValue }) => {
-    const url = "api/register/";
+    const url = "api/auth/register/";
     return await axios
       .post(url, formData, {
         headers: headers,

@@ -11,6 +11,8 @@ class UserCreateSerializer(serializers.ModelSerializer):
         # call set_password() to hash the user's password
         if password is not None:
             instance.set_password(password)
+
+        print(instance)
         instance.save()
         return instance
 

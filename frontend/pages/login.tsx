@@ -11,19 +11,28 @@ import React, {
 import { useAppDispatch } from "../store/hooks";
 import { login } from "../store/authSlice/actions";
 import { AuthFormData } from "../ts/interfaces/auth";
+import { unwrapResult } from "@reduxjs/toolkit";
+import { useRouter } from "next/router";
 
 const LoginPage = () => {
+  // const router = useRouter();
   const dispatch = useAppDispatch();
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<AuthFormData>({
     email: "",
     password: "",
   });
 
   const handleSubmit: FormEventHandler = (e) => {
     e.preventDefault();
-    dispatch(login(formData));
-    console.log("Login Clicked");
+    dispatch(login(formData))
+      .then(unwrapResult)
+      .then(res=>{
+        console.log(res)
+        // router.push('/')
+      })
+      .catch(err=>console.log(err))
+
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {

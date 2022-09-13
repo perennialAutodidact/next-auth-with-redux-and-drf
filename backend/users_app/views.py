@@ -1,4 +1,3 @@
-from weakref import ref
 from django.shortcuts import render
 
 import jwt
@@ -16,10 +15,8 @@ from rest_framework.decorators import (
     authentication_classes
 )
 
-from .authentication import SafeJWTAuthentication
-from .models import User, RefreshToken
+from .models import User
 from .serializers import UserCreateSerializer, UserDetailSerializer, UserUpdateSerializer
-from .utils import Token
 
 
 @api_view(['POST'])

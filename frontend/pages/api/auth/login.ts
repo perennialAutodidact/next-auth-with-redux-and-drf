@@ -3,13 +3,18 @@ import { API_URL } from "common/constants";
 import { setTokenCookies } from "common/api/utils";
 import { NextApiRequest, NextApiResponse } from "next";
 import { ServerResponse } from "http";
+import { httpClient, setHttpClientContext } from "common/api/httpClient";
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+
+export default async function handler (req: NextApiRequest, res: NextApiResponse) {
+
+  setHttpClientContext({req, res})
+
   if (req.method === "POST") {
     const { email, password } = req.body;
 
     try {
-      const apiRes = await axios.post(
+      const apiRes = await httpClient.post(
         `${API_URL}/token/`,
         JSON.stringify({ email, password }),
         {
@@ -23,10 +28,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       res = setTokenCookies(res, access, refresh);
 
       return res.status(200).json({
-        message: "Logged in successfully!",
+        messages: ["Logged in successfully!"],
       });
     } catch (error: any) {
-      console.log(error);
       if (error.response) {
         return res.status(error.response.status).json({
           errors: [error.response.data.detail],

@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import Image from "next/image";
+import Link from "next/link";
 import Layout from "../common/components/Layout";
 import styles from "../styles/Home.module.css";
 
@@ -9,8 +9,11 @@ const Home: NextPage = () => {
     <Layout>
       <div className={styles.container}>
         <h1>Home</h1>
+        <Link href="/profile">
+          <a href="">User Profile</a>
+        </Link>
       </div>
-    </Layout>
+     </Layout>
   );
 };
 

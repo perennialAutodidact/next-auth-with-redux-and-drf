@@ -23,7 +23,7 @@ interface ResponseData {
   errors?: string[];
 }
 export const setTokenCookies = (
-  res: NextApiResponse<ResponseData>, // | ServerResponse,
+  res: any,
   access: string,
   refresh: string
 ) => {
