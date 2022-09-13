@@ -27,12 +27,11 @@ const LoginPage = () => {
     e.preventDefault();
     dispatch(login(formData))
       .then(unwrapResult)
-      .then(res=>{
-        console.log(res)
+      .then((res) => {
+        console.log(res);
         // router.push('/')
       })
-      .catch(err=>console.log(err))
-
+      .catch((err) => console.log(err));
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {

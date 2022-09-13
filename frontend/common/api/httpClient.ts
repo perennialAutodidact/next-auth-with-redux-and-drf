@@ -3,7 +3,7 @@ import { GetServerSidePropsContext, PreviewData } from "next";
 import { API_URL } from "../constants";
 import { NextApiRequest, NextApiResponse } from "next";
 import { setTokenCookies } from "./utils";
-import cookie from 'cookie'
+import cookie from "cookie";
 const isServer = () => typeof window === "undefined";
 
 type ClientSideContext = {
@@ -33,7 +33,7 @@ export const setHttpClientContext = (_context: any) => {
 httpClient.interceptors.request.use((config) => {
   console.log("isServer:", isServer());
 
-  let accessToken = ''
+  let accessToken = "";
   if (isServer() && context?.req?.cookies) {
     const accessToken = context?.req?.cookies?.access;
 
@@ -48,6 +48,8 @@ httpClient.interceptors.request.use((config) => {
 
   return config;
 });
+
+debugger;
 
 httpClient.interceptors.response.use(
   (response: AxiosResponse) => {
@@ -77,7 +79,7 @@ let subscribers: ((access: string, refresh: string) => any)[] = [];
 
 const onTokensFetched = (access: string, refresh: string) => {
   console.log("refreshed tokens", { access, refresh });
-  debugger
+  debugger;
   subscribers.forEach((callback) => callback(access, refresh));
 };
 
@@ -92,8 +94,8 @@ const refreshToken = async (error: AxiosError) => {
     const retryOriginalRequest = () => {
       return new Promise((resolve) => {
         addSubscriber((access: string, refresh: string) => {
-          debugger
-          console.log('original url',response?.config.url)
+          debugger;
+          console.log("original url", response?.config.url);
           response!.config!.headers!.Authorization = `Bearer ${access}`;
           // response!.config!.headers!["Set-Cookie"] = JSON.stringify([
           //   cookie.serialize("access", '', {
@@ -123,16 +125,15 @@ const refreshToken = async (error: AxiosError) => {
       const { data } = await httpClient.post(`${API_URL}/token/refresh/`, {
         refresh: context?.req?.cookies?.refresh,
       });
-      
-      debugger
+
+      debugger;
       onTokensFetched(data.access, data.refresh);
     }
-    debugger
+    debugger;
     return retryOriginalRequest();
-
   } catch (error: any) {
     console.log("refresh token error", error.response.data);
-    console.log('cookies on error', error.response.cookies)
+    console.log("cookies on error", error.response.cookies);
     return Promise.reject(error);
   } finally {
     fetchingToken = false;
